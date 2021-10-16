@@ -2,10 +2,15 @@
 
 set -e
 
-if [[ -n "$RCLONE_CONF" ]]
-then
-  mkdir -p ~/.config/rclone
-  echo "$RCLONE_CONF" > ~/.config/rclone/rclone.conf
-fi
+mkdir -p ~/.config/rclone/
+echo "
+[OCI]
+type = s3
+provider = other
+env_auth = false
+access_key_id = $ACCESS
+secret_access_key = $SECRET
+endpoint = $ENDPOINT
+" > ~/.config/rclone/rclone.conf
 
 sh -c "rclone $*"
